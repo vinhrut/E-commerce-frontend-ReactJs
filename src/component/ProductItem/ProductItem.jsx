@@ -1,0 +1,148 @@
+import {
+  boxImg,
+  showImage,
+  showFunction,
+  boxIcon,
+  title,
+  price,
+  boxSize,
+  size,
+  textCenter,
+  boxBtn,
+  btnAdd,
+  content,
+  containerItem,
+  isActiveSize,
+  btnClear,
+} from "./style.module.scss";
+// import countImage_1 from "../../assets/icon/images/countImage_1.jpg";
+// import countImage_2 from "../../assets/icon/images/countImage_2.jpg";
+import heartIcon from "../../assets/icon/svgs/heartIcon.svg";
+import cartIcon from "../../assets/icon/svgs/cartIcon.svg";
+import reloadIcon from "../../assets/icon/svgs/reloadIcon.svg";
+import cls from "classnames";
+import { useContext, useEffect, useState } from "react";
+import { OurShopContext } from "../../contexts/OurShopProvider";
+import Cookies from "js-cookie";
+import { SidebarContext } from "../../contexts/SidebarProvider";
+import { ToastContext } from "../../contexts/ToastProvider";
+import { addToCart } from "../../apis/cartService";
+
+function ProductItem({
+  src,
+  prevSrc,
+  name,
+  priceItem,
+  details,
+  isHomePage = true,
+}) {
+  const ourShopStore = useContext(OurShopContext);
+  const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
+  const [sizeChoose, setSizeChoose] = useState("");
+  const userId = Cookies.get("userId");
+  const { setIsOpen, setType, handleGetListProductCart, listProductCart } =
+    useContext(SidebarContext);
+  const { toast } = useContext(ToastContext);
+
+  const handleChooseSize = (size) => {
+    setSizeChoose(size);
+  };
+
+  const handleClearSize = () => {
+    setSizeChoose("");
+  };
+
+  const handleAddToCart = () => {
+    if (!userId) {
+      toast.warn("Please login to add to cart");
+    } else if (!sizeChoose) {
+      toast.warn("Please choose size");
+    } else {
+      setIsOpen(true);
+      setType("cart");
+
+      const data = {
+        userId,
+        productId: details._id,
+        quantity: 1,
+        size: sizeChoose,
+      };
+
+      addToCart(data)
+        .then((res) => {
+          toast.success("Add to cart successfully");
+          handleGetListProductCart(userId, "cart");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (isHomePage) {
+      setIsShowGrid(true);
+    } else {
+      setIsShowGrid(ourShopStore?.isShowGrid);
+    }
+  }, [isHomePage, ourShopStore?.isShowGrid]);
+
+  return (
+    <div className={isShowGrid ? "" : containerItem}>
+      <div className={boxImg}>
+        <img src={src} alt="" />
+        <img src={prevSrc} alt="" className={showImage} />
+        <div className={showFunction}>
+          <div className={boxIcon}>
+            <img src={heartIcon} alt="Heart Icon" />
+          </div>
+          <div className={boxIcon}>
+            <img src={cartIcon} alt="Cart Icon" />
+          </div>
+          <div className={boxIcon}>
+            <img src={reloadIcon} alt="reload icon" />
+          </div>
+        </div>
+      </div>
+
+      <div className={isShowGrid ? "" : content}>
+        {!isHomePage && (
+          <div className={boxSize}>
+            {details.size.map((item, index) => (
+              <span
+                key={index}
+                className={cls(size, {
+                  [isActiveSize]: sizeChoose === item.name,
+                })}
+                onClick={() => handleChooseSize(item.name)}
+              >
+                {item.name}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {sizeChoose && (
+          <div className={btnClear} onClick={() => handleClearSize()}>
+            clear
+          </div>
+        )}
+
+        <div className={cls(title, { [textCenter]: !isHomePage })}>{name}</div>
+
+        <div className={cls(price, { [textCenter]: !isHomePage })}>
+          ${priceItem}
+        </div>
+        {!isHomePage && (
+          <div className={boxBtn}>
+            <button className={btnAdd} onClick={handleAddToCart}>
+              Add to cart
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default ProductItem;

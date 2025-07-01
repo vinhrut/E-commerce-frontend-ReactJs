@@ -1,0 +1,15 @@
+@import "../../assets/styles/_mixin.module.scss";
+
+.wrapInfo {
+  display: flex;
+  justify-content: center;
+  margin-top: -75px;
+  position: relative;
+}
+
+.container {
+  width: 1250px;
+  background-color: #333;
+  color: white;
+  @include flex_box_custom(center, center, 0px);
+}

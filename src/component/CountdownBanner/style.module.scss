@@ -1,0 +1,32 @@
+.container {
+  background-image: url(../../assets//icon//images/countVV.jpg);
+  height: 409px;
+  width: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    background-color: #850e0e;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-family: sans-serif;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #ae0707;
+    }
+
+    &:active {
+      background-color: #610000;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+  // can giua
+
+  margin-top: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: grey;
+    margin-bottom: 0px;
+  }
+
+  .remember {
+    color: grey;
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+
+  button {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    width: 305px;
+    margin-top: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(41, 39, 39);
+      color: rgb(255, 255, 255);
+    }
+  }
+
+  .forgot {
+    cursor: pointer;
+    color: grey;
+
+    &:hover {
+      text-decoration: underline;
+      color: rgb(31, 30, 30);
+    }
+  }
+  .signupClass {
+    cursor: pointer;
+    color: grey;
+    text-decoration: underline;
+
+    &:hover {
+      color: rgb(31, 30, 30);
+    }
+  }
+}

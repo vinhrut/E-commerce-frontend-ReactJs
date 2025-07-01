@@ -1,0 +1,32 @@
+@import "../../assets/styles/mixin.module.scss";
+
+.container {
+  background-color: #303030;
+  color: white;
+  height: 350px;
+  margin-top: 80px;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 30px;
+
+  img {
+    margin-top: 0px;
+    margin-bottom: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .menu {
+    @include flex_box_custom(center, center, 50px);
+    margin-bottom: 30px;
+
+    .menu_content {
+      &:hover {
+        color: #cfcfcf;
+        cursor: pointer;
+      }
+    }
+  }
+}

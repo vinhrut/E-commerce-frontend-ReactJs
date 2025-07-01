@@ -1,0 +1,42 @@
+@import "../../assets/styles/mixin.module.scss";
+
+.container {
+  margin-top: 90px;
+  @include flex_box_custom(space-between, center, 10px);
+  margin-left: 40px;
+  margin-right: 40px;
+
+  img {
+    width: 530px;
+    height: 610px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .content {
+    text-align: center;
+    width: 264px;
+    height: 500px;
+    align-items: center;
+
+    h2 {
+      font-size: 35px;
+      font-weight: 400px;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    button {
+      border: 1px solid #2c2a2a;
+      background-color: #413e3e;
+      color: white;
+
+      &:hover {
+        background-color: #726e6e;
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@import "../../../src/assets/styles/mixin.module.scss";
+
+.container {
+  padding-top: 95px;
+  text-align: center;
+
+  .functionBox {
+    @include flex_box_custom(space-between, center, 100px);
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 10px;
+
+    .specialText {
+      color: black;
+      font-weight: 400;
+      cursor: pointer;
+    }
+    .btnBack {
+      cursor: pointer;
+      &:hover {
+        color: black;
+        font-weight: 400;
+      }
+    }
+    .btnHome {
+      cursor: pointer;
+
+      &:hover {
+        color: black;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .titleBox {
+    @include flex_box_custom(space-between, center, 0px);
+    margin-top: 25px;
+    margin-bottom: 20px;
+
+    .middleTitleBox {
+      @include flex_box_custom(center, center, 0px);
+      flex-direction: column;
+      width: 100%;
+      height: 0px;
+      padding: 0px;
+    }
+  }
+
+  .contentBox {
+    @include flex_box_custom(space-between, center, 10px);
+    margin-top: 50px;
+    // text-align: left;
+  }
+}
+
+.headline {
+  width: 100%;
+  height: 2px;
+  border-top: 1px solid #cfcccc;
+  border-bottom: 1px solid #cfc8c8;
+}
+
+.containerContentItem {
+  flex-direction: column;
+}
+
+.logoBox {
+  @include flex_box_custom(space-between, center, 0px);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.questionContent {
+  @include flex_box_custom(space-between, center, 20px);
+}

@@ -1,0 +1,61 @@
+@import "../../../../assets/styles/mixin.module.scss";
+
+.container {
+  @include flex_box_custom(center, flex-start, 25px);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 40px;
+  transition: all 0.3s ease-in-out;
+  width: 300px;
+  position: relative;
+
+  img {
+    width: 70px;
+  }
+
+  .content {
+    @include flex_box_custom(center, flex-start, 0px);
+    flex-direction: column;
+
+    .title {
+      font-size: 16px;
+      color: rgb(75, 75, 75);
+    }
+
+    .sizeBox {
+      font-size: 14px;
+      color: rgb(75, 75, 75);
+      margin-bottom: 10px;
+    }
+
+    .priceBox {
+      font-size: 14px;
+      color: rgb(75, 75, 75);
+      margin-bottom: 7px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(221, 221, 221);
+    .box_close {
+      transform: translate(0px);
+    }
+  }
+
+  .box_close {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+    transform: translate(40px);
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgb(156, 150, 150);
+    }
+  }
+}

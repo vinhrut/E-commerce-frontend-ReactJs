@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 15px;
+
+  .labelInput {
+    font-size: 15px;
+    color: grey;
+  }
+
+  .boxInput {
+    width: 300px;
+    height: 35px;
+    position: relative;
+
+    input {
+      padding-left: 10px;
+      width: 300px;
+      height: 35px;
+      border: 1px solid #959292;
+    }
+
+    .boxIcon {
+      position: absolute;
+      right: 0px;
+      top: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 12px;
+  }
+
+  .message {
+    color: red;
+    font-size: 12px;
+  }
+}
