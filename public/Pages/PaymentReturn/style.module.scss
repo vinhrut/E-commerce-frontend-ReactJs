@@ -1,0 +1,139 @@
+@import "../../../src/assets/styles/mixin.module.scss";
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 80px 20px 60px;
+    margin-top: 80px;
+}
+
+.loadingBox {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+}
+
+.card {
+    max-width: 480px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+}
+
+.successCard {
+    background: #f0fff4;
+    border: 2px solid #38a169;
+}
+
+.failCard {
+    background: #fff5f5;
+    border: 2px solid #e53e3e;
+}
+
+.icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 12px;
+
+    .successCard & {
+        color: #276749;
+    }
+
+    .failCard & {
+        color: #c53030;
+    }
+}
+
+.message {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.infoBox {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 6px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.infoValue {
+    font-weight: 600;
+    color: #111;
+}
+
+.btnGroup {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btnPrimary {
+    padding: 12px 24px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #333;
+    }
+}
+
+.btnSecondary {
+    padding: 12px 24px;
+    background: white;
+    color: #111;
+    border: 1.5px solid #111;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #f5f5f5;
+    }
+}
+
+.loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

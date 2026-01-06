@@ -1,0 +1,39 @@
+.countdown-wrapper {
+  padding-top: 50px;
+  border-radius: 12px;
+  text-align: center;
+  color: #000000;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.countdown-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.time-segment {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  span {
+    display: block;
+  }
+
+  .label {
+    font-size: 0.85rem;
+    color: #a2a0a0;
+    margin-top: 0.25rem;
+  }
+}
+
+.expired {
+  color: #d62424;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
