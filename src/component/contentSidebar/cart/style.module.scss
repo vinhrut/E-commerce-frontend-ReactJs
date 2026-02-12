@@ -1,0 +1,40 @@
+@import "../../../assets/styles/mixin.module.scss";
+
+.container {
+  @include flex_box_custom(space-between, unset, 0px);
+  flex-direction: column;
+  height: 95vh;
+  margin-bottom: 0px;
+
+  .boxContent {
+    margin-left: 25px;
+  }
+
+  .boxPrice {
+    @include flex_box_custom(space-between, unset, 0px);
+    margin-bottom: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    color: rgb(116, 115, 115);
+  }
+
+  .boxButton {
+    width: 300px;
+    border-radius: 3px;
+    margin-left: 20px;
+
+    .button1 button {
+      width: 300px;
+      color: white;
+      background-color: rgb(33, 33, 33);
+    }
+
+    .button2 button {
+      width: 300px;
+      color: rgb(0, 0, 0);
+      background-color: rgb(255, 255, 255);
+      border: 1px solid rgb(0, 0, 0);
+      margin-top: 10px;
+    }
+  }
+}

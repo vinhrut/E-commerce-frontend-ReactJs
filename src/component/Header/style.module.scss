@@ -1,0 +1,184 @@
+@import "../../assets/styles/variable.module.scss";
+@import "../../assets/styles/mixin.module.scss";
+
+.container {
+  @include flex_box_custom(center, center, 0);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 83px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: none;
+}
+
+.containerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 83px;
+  width: 100%;
+  max-width: 1300px;
+  padding: 0 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.containerBoxIcon {
+  @include flex_box_custom(center, center, 10px);
+  cursor: pointer;
+}
+
+.containerBoxLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+}
+
+.containerBoxRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+}
+
+.containerMenu {
+  @include flex_box_custom(center, center, 24px);
+}
+
+.boxIcon {
+  position: relative;
+  @include radius_common(50%);
+  @include flex_box_custom(center, center, 0);
+  width: 26px;
+  height: 26px;
+  margin-right: 10px;
+
+  .quantity {
+    position: absolute;
+    top: -7px;
+    right: -8px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #2b2a2a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+}
+
+.menu {
+  cursor: pointer;
+  position: relative;
+  height: 35px;
+
+  .subMenu {
+    position: absolute;
+    margin-top: 10px;
+    width: 100%;
+    background-color: #c8c8c8;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: #e5e3e3;
+    }
+  }
+}
+
+.menu::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: $primary_color;
+  position: absolute;
+
+  left: 0;
+
+  transform-origin: right;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform 300ms, opacity 300ms;
+}
+
+.menu:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* ===== AUTH AREA ===== */
+.authArea {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 16px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  border: 1px solid #eaeaea;
+  white-space: nowrap;
+}
+
+.authLink {
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $primary_color;
+  }
+}
+
+.authLinkAdmin {
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #4f46e5;
+  }
+}
+
+.authLinkMuted {
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #b91c1c;
+  }
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  cursor: default;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
