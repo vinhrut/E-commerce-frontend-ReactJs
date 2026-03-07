@@ -2,13 +2,14 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosClient = axios.create({
-  baseURL: "https://be-project-reactjs.vercel.app/api/v1",
+  baseURL: "http://localhost:8080",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+// Gắn accessToken vào mọi request
 axiosClient.interceptors.request.use((config) => {
   const token = Cookies.get("token");
   if (token) {
@@ -17,35 +18,33 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Tự động refresh token khi 401
 axiosClient.interceptors.response.use(
-  (res) => {
-    return res;
-  },
+  (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refreshToken = Cookies.get("refreshToken");
-
       if (!refreshToken) return Promise.reject(error);
 
       try {
-        const res = await axiosClient.post("/refresh-token", {
-          token: refreshToken,
+        const res = await axiosClient.post("/api/auth/refresh-token", {
+          refreshToken,
         });
 
-        console.log("res refresh token: ", res);
-
-        Cookies.set("token", res.data.accessToken);
-        originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
+        const newAccessToken = res.data.result.accessToken;
+        Cookies.set("token", newAccessToken);
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return axiosClient(originalRequest);
-      } catch (error) {
+      } catch (err) {
         Cookies.remove("token");
         Cookies.remove("refreshToken");
-
-        return Promise.reject(error);
+        Cookies.remove("userId");
+        window.location.href = "/";
+        return Promise.reject(err);
       }
     }
 

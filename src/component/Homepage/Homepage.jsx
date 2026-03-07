@@ -16,15 +16,13 @@ function Homepage() {
   const [listProducts, setListProducts] = useState([]);
 
   useEffect(() => {
-    const query = {
-      sortType: 0,
-      page: 1,
-      limit: 10,
-    };
     const fetchProducts = async () => {
       try {
-        const response = await getProducts(query);
-        setListProducts(response.contents);
+        const response = await getProducts();
+        // Backend trả: { code: 1000, message: "...", result: ProductResponse[] }
+        if (response.code === 1000) {
+          setListProducts(response.result);
+        }
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }

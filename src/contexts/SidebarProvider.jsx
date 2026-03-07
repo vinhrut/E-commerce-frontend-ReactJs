@@ -15,7 +15,12 @@ export const SidebarProvider = ({ children }) => {
   const handleGetListProductCart = (userId, type) => {
     if (userId && type === "cart") {
       getCart(userId).then((res) => {
-        setListProductCart(res.data.data);
+        // Backend trả: { code: 1000, message: "...", result: CartItemResponse[] }
+        if (res.code === 1000) {
+          setListProductCart(res.result || []);
+        }
+      }).catch((err) => {
+        console.error("Lỗi lấy giỏ hàng:", err);
       });
     }
   };

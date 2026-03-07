@@ -14,22 +14,36 @@ export const StoreProvider = ({ children }) => {
     Cookies.remove("userId");
     Cookies.remove("refreshToken");
     setUserInfo(null);
+    setUserId(null);
+  };
+
+  // Lưu thông tin sau khi đăng nhập
+  // authResult = { accessToken, refreshToken, roles, userResponse }
+  const handleLoginSuccess = (authResult) => {
+    Cookies.set("token", authResult.accessToken);
+    Cookies.set("refreshToken", authResult.refreshToken);
+    Cookies.set("userId", authResult.userResponse.id);
+    setUserId(authResult.userResponse.id);
+    setUserInfo(authResult.userResponse);
   };
 
   useEffect(() => {
     if (userId) {
       getInfo(userId)
         .then((res) => {
-          setUserInfo(res.data.data);
+          // Backend trả: { code: 1000, message: "...", result: UserResponse }
+          if (res.code === 1000) {
+            setUserInfo(res.result);
+          }
         })
         .catch((err) => {
-          console.log("day la err: ", err);
+          console.log("Lỗi lấy thông tin user:", err);
         });
     }
   }, [userId]);
 
   return (
-    <StoreContext.Provider value={{ userInfo, handleLogout, setUserId }}>
+    <StoreContext.Provider value={{ userInfo, handleLogout, setUserId, handleLoginSuccess }}>
       {children}
     </StoreContext.Provider>
   );

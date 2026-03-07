@@ -54,27 +54,28 @@ function ProductItem({
 
   const handleAddToCart = () => {
     if (!userId) {
-      toast.warn("Please login to add to cart");
+      toast.warn("Vui lòng đăng nhập để thêm vào giỏ hàng");
     } else if (!sizeChoose) {
-      toast.warn("Please choose size");
+      toast.warn("Vui lòng chọn size trước");
     } else {
       setIsOpen(true);
       setType("cart");
 
       const data = {
         userId,
-        productId: details._id,
+        productId: details.id,   // Spring Boot dùng 'id' (UUID), không phải '_id' (MongoDB)
         quantity: 1,
         size: sizeChoose,
       };
 
       addToCart(data)
         .then((res) => {
-          toast.success("Add to cart successfully");
+          toast.success("Thêm vào giỏ hàng thành công!");
           handleGetListProductCart(userId, "cart");
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Thêm vào giỏ thất bại!");
         });
     }
   };
@@ -108,15 +109,16 @@ function ProductItem({
       <div className={isShowGrid ? "" : content}>
         {!isHomePage && (
           <div className={boxSize}>
-            {details.size.map((item, index) => (
+            {/* Backend trả: sizes: [{ sizeName, quantity }] */}
+            {(details.sizes || []).map((item, index) => (
               <span
                 key={index}
                 className={cls(size, {
-                  [isActiveSize]: sizeChoose === item.name,
+                  [isActiveSize]: sizeChoose === item.sizeName,
                 })}
-                onClick={() => handleChooseSize(item.name)}
+                onClick={() => handleChooseSize(item.sizeName)}
               >
-                {item.name}
+                {item.sizeName}
               </span>
             ))}
           </div>

@@ -1,29 +1,37 @@
 import axiosClient from "./axiosClient";
 
+// POST /api/users — Đăng ký tài khoản mới
 const register = async (data) => {
-  try {
-    const response = await axiosClient.post("/register", data);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  // data: { fullName, email, password, phone }
+  const response = await axiosClient.post("/api/users", data);
+  return response.data; // { code, message, result: UserResponse }
 };
 
+// POST /api/auth/login — Đăng nhập
 const signIn = async (data) => {
-  try {
-    const response = await axiosClient.post("/login", data);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  // data: { email, password }
+  const response = await axiosClient.post("/api/auth/login", data);
+  return response.data; // { code, message, result: { accessToken, refreshToken, roles, userResponse } }
 };
 
+// GET /api/users/{id} — Lấy thông tin user
 const getInfo = async (userId) => {
-  try {
-    return await axiosClient.get(`/user/info/${userId}`);
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosClient.get(`/api/users/${userId}`);
+  return response.data; // { code, message, result: UserResponse }
 };
 
-export { register, signIn, getInfo };
+// PUT /api/users/updateUserProfile/{id} — Cập nhật thông tin cá nhân
+const updateProfile = async (userId, data) => {
+  // data: { fullName, phone }
+  const response = await axiosClient.put(`/api/users/updateUserProfile/${userId}`, data);
+  return response.data;
+};
+
+// PUT /api/users/updateUserPassword/{id} — Đổi mật khẩu
+const updatePassword = async (userId, data) => {
+  // data: { oldPassword, newPassword }
+  const response = await axiosClient.put(`/api/users/updateUserPassword/${userId}`, data);
+  return response.data;
+};
+
+export { register, signIn, getInfo, updateProfile, updatePassword };
