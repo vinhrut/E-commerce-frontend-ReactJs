@@ -5,6 +5,7 @@ import style from "./style.module.scss";
 import Logo from "../../assets/icon/images/Logo-retina.webp";
 import { useContext } from "react";
 import { SidebarContext } from "../../contexts/SidebarProvider";
+import { StoreContext } from "../../contexts/storeProvider";
 import { useNavigate } from "react-router-dom";
 
 function MyHeader() {
@@ -18,10 +19,16 @@ function MyHeader() {
 
   const { setType, setIsOpen, setContentSidebar, listProductCart } =
     useContext(SidebarContext);
+  const { userInfo, handleLogout } = useContext(StoreContext);
 
   const navigate = useNavigate();
 
   const handleBackHome = () => navigate("/");
+
+  const handleOpenLogin = () => {
+    setType("Sign in");
+    setIsOpen(true);
+  };
 
   return (
     <div className={container}>
@@ -57,7 +64,7 @@ function MyHeader() {
         </div>
         <div className={containerBox}>
           <div className={containerMenu}>
-            {dataMenu.slice(3, 6).map((item, index) => {
+            {dataMenu.slice(3, 5).map((item, index) => {
               return (
                 <MyMenu
                   key={index}
@@ -69,6 +76,32 @@ function MyHeader() {
                 />
               );
             })}
+            {/* User auth area */}
+            {userInfo ? (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "14px", fontWeight: 500, cursor: "default" }}>
+                  {userInfo.fullName || userInfo.email}
+                </span>
+                <span
+                  onClick={handleLogout}
+                  style={{
+                    fontSize: "13px",
+                    cursor: "pointer",
+                    color: "#888",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Đăng xuất
+                </span>
+              </div>
+            ) : (
+              <span
+                onClick={handleOpenLogin}
+                style={{ cursor: "pointer", fontSize: "14px" }}
+              >
+                Đăng nhập
+              </span>
+            )}
           </div>
           <div className={containerBoxIcon}>
             {dataBoxIcon.slice(3, 6).map((item, index) => (

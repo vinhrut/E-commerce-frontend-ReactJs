@@ -4,8 +4,8 @@ import HeaderSidebar from "../component/headerSidebar/HeaderSidebar";
 import ItemProduct from "../component/itemProduct/ItemProduct";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/SidebarProvider";
+import { StoreContext } from "../../../contexts/storeProvider";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 function Cart() {
   const {
@@ -20,11 +20,16 @@ function Cart() {
   } = style;
 
   const { listProductCart, setIsOpen } = useContext(SidebarContext);
+  const { userId } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const MoveToViewCart = () => navigate("/viewCart");
-  const userId = Cookies.get("userId");
-  // const [totalPrice, setTotalPrice] = useState(0);
+
+  // Tính tổng tiền từ các CartItemResponse
+  const subtotal = listProductCart.reduce(
+    (sum, item) => sum + (item.totalPrice || 0),
+    0
+  );
 
   return (
     <div className={container}>
@@ -32,34 +37,38 @@ function Cart() {
         <div>
           <HeaderSidebar
             icon={<MdOutlineShoppingCart style={{ fontSize: "25px" }} />}
-            title={"CART"}
+            title={"GIỎ HÀNG"}
           />
+          {!userId && (
+            <div style={{ color: "gray", textAlign: "center", padding: "20px" }}>
+              Vui lòng đăng nhập để xem giỏ hàng
+            </div>
+          )}
+          {userId && listProductCart.length === 0 && (
+            <div style={{ color: "gray", textAlign: "center", padding: "20px" }}>
+              Giỏ hàng của bạn đang trống
+            </div>
+          )}
           {listProductCart.map((item, index) => (
             <ItemProduct
               key={index}
-              src={item.images[0]}
-              name={item.name}
+              cartItemId={item.id}
+              src={item.images?.[0] || ""}
+              name={item.productName || ""}
               size={item.size}
-              price={item.price}
-              SKU={item.SKU}
+              price={item.totalPrice}
               quantity={item.quantity}
-              productId={item.productId}
-              userId={item.userId}
             />
           ))}
         </div>
       </div>
 
-      {!userId && (
-        <div style={{ color: "gray", textAlign: "center" }}>
-          Please login to view cart
-        </div>
-      )}
-
       <div>
         <div className={boxPrice}>
-          <div className={title}>SUBTOTAL:</div>
-          <div className={price}>$price</div>
+          <div className={title}>TẠM TÍNH:</div>
+          <div className={price}>
+            {subtotal.toLocaleString("vi-VN")}đ
+          </div>
         </div>
 
         <div className={boxButton}>
@@ -70,11 +79,11 @@ function Cart() {
                 setIsOpen(false);
               }}
             >
-              View cart
+              Xem giỏ hàng
             </button>
           </div>
           <div className={button2}>
-            <button>Checkout</button>
+            <button>Thanh toán</button>
           </div>
         </div>
       </div>
