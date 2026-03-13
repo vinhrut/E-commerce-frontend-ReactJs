@@ -83,7 +83,7 @@ function Cart() {
             </button>
           </div>
           <div className={button2}>
-            <button>Thanh toán</button>
+            <button onClick={() => { navigate("/checkout"); setIsOpen(false); }}>Thanh toán</button>
           </div>
         </div>
       </div>

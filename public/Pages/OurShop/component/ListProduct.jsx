@@ -15,7 +15,7 @@ function ListProduct() {
       <Layout>
         <div className={listProductSession}>
           {isLoading ? (
-            <>Loading ... </>
+            <>Đang tải... </>
           ) : (
             <>
               <div className={isShowGrid ? containerProduct : ""}>
@@ -34,7 +34,7 @@ function ListProduct() {
               {total > products.length && (
                 <div className={boxLoadMore}>
                   <button className={btnLoadMore} onClick={handleLoadMore}>
-                    {isLoadMore ? "Loading..." : "Load more"}
+                    {isLoadMore ? "Đang tải..." : "Xem thêm"}
                   </button>
                 </div>
               )}

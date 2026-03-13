@@ -15,13 +15,12 @@ import {
   isActiveSize,
   btnClear,
 } from "./style.module.scss";
-// import countImage_1 from "../../assets/icon/images/countImage_1.jpg";
-// import countImage_2 from "../../assets/icon/images/countImage_2.jpg";
 import heartIcon from "../../assets/icon/svgs/heartIcon.svg";
 import cartIcon from "../../assets/icon/svgs/cartIcon.svg";
 import reloadIcon from "../../assets/icon/svgs/reloadIcon.svg";
 import cls from "classnames";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { OurShopContext } from "../../contexts/OurShopProvider";
 import Cookies from "js-cookie";
 import { SidebarContext } from "../../contexts/SidebarProvider";
@@ -43,6 +42,11 @@ function ProductItem({
   const { setIsOpen, setType, handleGetListProductCart, listProductCart } =
     useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
+  const navigate = useNavigate();
+
+  const handleViewDetail = () => {
+    if (details?.id) navigate(`/product/${details.id}`);
+  };
 
   const handleChooseSize = (size) => {
     setSizeChoose(size);
@@ -90,14 +94,14 @@ function ProductItem({
 
   return (
     <div className={isShowGrid ? "" : containerItem}>
-      <div className={boxImg}>
+      <div className={boxImg} style={{ cursor: "pointer" }} onClick={handleViewDetail}>
         <img src={src} alt="" />
         <img src={prevSrc} alt="" className={showImage} />
         <div className={showFunction}>
           <div className={boxIcon}>
             <img src={heartIcon} alt="Heart Icon" />
           </div>
-          <div className={boxIcon}>
+          <div className={boxIcon} onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}>
             <img src={cartIcon} alt="Cart Icon" />
           </div>
           <div className={boxIcon}>
@@ -126,11 +130,11 @@ function ProductItem({
 
         {sizeChoose && (
           <div className={btnClear} onClick={() => handleClearSize()}>
-            clear
+            xóa
           </div>
         )}
 
-        <div className={cls(title, { [textCenter]: !isHomePage })}>{name}</div>
+        <div className={cls(title, { [textCenter]: !isHomePage })} style={{ cursor: "pointer" }} onClick={handleViewDetail}>{name}</div>
 
         <div className={cls(price, { [textCenter]: !isHomePage })}>
           ${priceItem}
@@ -138,7 +142,7 @@ function ProductItem({
         {!isHomePage && (
           <div className={boxBtn}>
             <button className={btnAdd} onClick={handleAddToCart}>
-              Add to cart
+              Thêm vào giỏ
             </button>
           </div>
         )}

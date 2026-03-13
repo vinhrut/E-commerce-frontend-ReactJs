@@ -83,13 +83,14 @@ function MyHeader() {
                   {userInfo.fullName || userInfo.email}
                 </span>
                 <span
+                  onClick={() => navigate("/my-orders")}
+                  style={{ fontSize: "13px", cursor: "pointer", color: "#555", textDecoration: "underline" }}
+                >
+                  Đơn hàng
+                </span>
+                <span
                   onClick={handleLogout}
-                  style={{
-                    fontSize: "13px",
-                    cursor: "pointer",
-                    color: "#888",
-                    textDecoration: "underline",
-                  }}
+                  style={{ fontSize: "13px", cursor: "pointer", color: "#888", textDecoration: "underline" }}
                 >
                   Đăng xuất
                 </span>

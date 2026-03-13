@@ -1,0 +1,153 @@
+@import "../../../src/assets/styles/mixin.module.scss";
+
+.container {
+    margin-top: 110px;
+    margin-bottom: 60px;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pageTitle {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px;
+    color: #888;
+}
+
+.empty {
+    text-align: center;
+    padding: 80px 40px;
+    color: #888;
+}
+
+.emptyIcon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.shopBtn {
+    margin-top: 16px;
+    padding: 12px 28px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background: #333;
+    }
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.orderCard {
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background: white;
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.orderId {
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.orderDate {
+    font-size: 12px;
+    color: #888;
+}
+
+.statusBadge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.orderItems {
+    padding: 0 20px;
+}
+
+.orderItem {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f3f3f3;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.itemImg {
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f3f3f3;
+}
+
+.itemInfo {
+    flex: 1;
+}
+
+.itemName {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.itemMeta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+}
+
+.itemPrice {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.orderFooter {
+    padding: 14px 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.totalAmount {
+    font-weight: 700;
+    font-size: 16px;
+    color: #e44d4d;
+}

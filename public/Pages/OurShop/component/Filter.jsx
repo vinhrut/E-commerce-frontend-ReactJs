@@ -58,7 +58,7 @@ function Filter() {
         </div>
       </div>
       <div className={boxRight}>
-        <div>Show</div>
+        <div>Hiển thị</div>
         <select
           name=""
           id=""
