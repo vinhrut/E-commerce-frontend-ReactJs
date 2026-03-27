@@ -176,10 +176,11 @@
 /* ===== MAIN CONTENT ===== */
 .main {
   flex: 1;
-  margin-left: 240px;
+  margin-left: 250px;
   padding: 32px 36px;
   min-height: 100vh;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

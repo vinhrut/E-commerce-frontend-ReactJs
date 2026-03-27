@@ -1,11 +1,78 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .page { 
   max-width: 1200px; 
   animation: fadeIn 0.4s ease-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.title { 
+  font-size: 32px; 
+  font-weight: 800; 
+  color: #1e293b; 
+  margin: 0 0 8px; 
+  letter-spacing: -0.5px;
+}
+
+.subtitle { 
+  color: #64748b; 
+  font-size: 16px; 
+  margin: 0; 
+  font-weight: 500;
+}
+
+/* Tool Bar */
+.toolBar {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.02);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filterLabelWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterLabel { 
+  font-size: 14px; 
+  font-weight: 600; 
+  color: #475569; 
+}
+
+.filterChips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filterBtnActive { 
+  padding: 8px 16px; 
+  border-radius: 20px; 
+  background: #3b82f6; 
+  color: #ffffff; 
+  border: 1px solid #3b82f6; 
+  font-size: 13px; 
+  font-weight: 600; 
+  cursor: default;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.25);
 }
 
 .header { 
@@ -31,7 +98,6 @@
   margin: 0; 
   font-weight: 500;
 }
-
 
 /* Table Card */
 .tableCard { 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { filterOrders, updateOrderStatus } from "../../../../src/apis/adminService";
 import styles from "./AdminOrders.module.css";
-import { MdLocalShipping, MdCheckCircle, MdCancel, MdSearch, MdVisibility } from "react-icons/md";
+import { MdLocalShipping, MdCheckCircle, MdCancel, MdSearch, MdVisibility, MdClose } from "react-icons/md";
 
 const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "SHIPPING", "DELIVERED", "CANCELLED"];
 
@@ -62,24 +62,29 @@ export default function AdminOrders() {
       </div>
 
       {/* Filter */}
-      <div className={styles.filterCard}>
-        <div className={styles.filterTabs}>
-          <button
-            className={`${styles.tabBtn} ${filterStatus === "" ? styles.activeTab : ""}`}
-            onClick={() => { setFilterStatus(""); setPage(0); }}
-          >
-            Tất cả
-          </button>
-          {STATUS_OPTIONS.map((s) => (
+      <div className={styles.toolBar}>
+        <div className={styles.filterGroup}>
+          <div className={styles.filterLabelWrap}>
+            <span className={styles.filterLabel}>Trạng thái đơn hàng:</span>
+          </div>
+          <div className={styles.filterTabs}>
             <button
-              key={s}
-              className={`${styles.tabBtn} ${filterStatus === s ? styles.activeTab : ""}`}
-              onClick={() => { setFilterStatus(s); setPage(0); }}
-              data-status={s}
+              className={`${styles.tabBtn} ${filterStatus === "" ? styles.activeTab : ""}`}
+              onClick={() => { setFilterStatus(""); setPage(0); }}
             >
-              {STATUS_LABELS[s]}
+              Tất cả
             </button>
-          ))}
+            {STATUS_OPTIONS.map((s) => (
+              <button
+                key={s}
+                className={`${styles.tabBtn} ${filterStatus === s ? styles.activeTab : ""}`}
+                onClick={() => { setFilterStatus(s); setPage(0); }}
+                data-status={s}
+              >
+                {STATUS_LABELS[s]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -105,7 +110,7 @@ export default function AdminOrders() {
                   <th>Địa chỉ giao</th>
                   <th>Tổng tiền</th>
                   <th>Trạng thái</th>
-                  <th align="center">Thao tác</th>
+                  <th className={styles.thRight}>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -126,14 +131,14 @@ export default function AdminOrders() {
                         {STATUS_LABELS[o.status] || o.status}
                       </span>
                     </td>
-                    <td>
+                    <td className={styles.tdAction}>
                       <div className={styles.actionGroup}>
                         <button 
                           className={styles.viewBtn} 
                           title="Xem chi tiết"
                           onClick={() => setDetailOrder(o)}
                         >
-                          <MdVisibility /> Xem
+                          <MdVisibility size={16} /> Xem
                         </button>
                         
                         {(o.status === "PENDING" || o.status === "CONFIRMED") && (
@@ -143,7 +148,7 @@ export default function AdminOrders() {
                             disabled={updatingId === o.orderId}
                             onClick={() => handleStatusChange(o.orderId, "SHIPPING")}
                           >
-                            <MdLocalShipping /> {updatingId === o.orderId ? "..." : "Giao hàng"}
+                            <MdLocalShipping size={16} /> {updatingId === o.orderId ? "..." : "Giao hàng"}
                           </button>
                         )}
 
@@ -154,7 +159,7 @@ export default function AdminOrders() {
                             disabled={updatingId === o.orderId}
                             onClick={() => handleStatusChange(o.orderId, "DELIVERED")}
                           >
-                            <MdCheckCircle /> {updatingId === o.orderId ? "..." : "Đã giao"}
+                            <MdCheckCircle size={16} /> {updatingId === o.orderId ? "..." : "Đã giao"}
                           </button>
                         )}
 
@@ -165,7 +170,7 @@ export default function AdminOrders() {
                             disabled={updatingId === o.orderId}
                             onClick={() => handleStatusChange(o.orderId, "CANCELLED")}
                           >
-                            <MdCancel /> Hủy
+                            <MdCancel size={16} /> Hủy
                           </button>
                         )}
                       </div>
@@ -212,21 +217,21 @@ export default function AdminOrders() {
                   {detailOrder.createdAt ? new Date(detailOrder.createdAt).toLocaleString("vi-VN") : "—"}
                 </span>
               </div>
-              <button className={styles.closeBtn} onClick={() => setDetailOrder(null)}>✕</button>
+              <button className={styles.closeBtn} onClick={() => setDetailOrder(null)}><MdClose size={18} /></button>
             </div>
             
             <div className={styles.modalBody}>
               <div className={styles.statusBanner} data-status={detailOrder.status}>
                 <span>Trạng thái hiện tại:</span>
-                <strong>{STATUS_LABELS[detailOrder.status]}</strong>
+                <strong>{STATUS_LABELS[detailOrder.status] || detailOrder.status}</strong>
               </div>
 
               {detailOrder.shippingInfo && (
                 <div className={styles.infoSection}>
                   <h3>Thông tin giao hàng</h3>
                   <div className={styles.infoContent}>
-                    <p><strong>Người nhận:</strong> {detailOrder.shippingInfo.fullName} - {detailOrder.shippingInfo.phone}</p>
-                    <p><strong>Địa chỉ:</strong> {detailOrder.shippingInfo.streetAddress}, {detailOrder.shippingInfo.ward}, {detailOrder.shippingInfo.district}, {detailOrder.shippingInfo.province}</p>
+                    <p><strong>Người nhận:</strong> {detailOrder.shippingInfo.fullName || "—"} - {detailOrder.shippingInfo.phone || "—"}</p>
+                    <p><strong>Địa chỉ:</strong> {detailOrder.shippingInfo.streetAddress || ""}, {detailOrder.shippingInfo.ward || ""}, {detailOrder.shippingInfo.district || ""}, {detailOrder.shippingInfo.province || "—"}</p>
                   </div>
                 </div>
               )}

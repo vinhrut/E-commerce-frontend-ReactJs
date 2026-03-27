@@ -69,8 +69,21 @@ export default function AdminUsers() {
           <p className={styles.subtitle}>Xem danh sách thành viên và phân quyền hệ thống</p>
         </div>
         <button className={styles.btnSecondary} onClick={() => loadUsers(page)}>
-          <MdRefresh size={20} /> Làm mới
+          <MdRefresh size={20} /> Làm mới thành viên
         </button>
+      </div>
+
+      <div className={styles.toolBar}>
+        <div className={styles.filterGroup}>
+          <div className={styles.filterLabelWrap}>
+            <MdPeople size={20} color="#64748b" />
+            <span className={styles.filterLabel}>Lọc & Tìm kiếm:</span>
+          </div>
+          <div className={styles.filterChips}>
+             <button className={styles.filterBtnActive}>Tất cả người dùng</button>
+             {/* Future search/filter can be added here */}
+          </div>
+        </div>
       </div>
 
       <div className={styles.tableCard}>

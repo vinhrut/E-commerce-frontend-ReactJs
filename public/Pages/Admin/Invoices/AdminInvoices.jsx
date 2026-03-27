@@ -108,7 +108,7 @@ export default function AdminInvoices() {
                   <th>Số tiền</th>
                   <th>Trạng thái</th>
                   <th>Ngày tạo</th>
-                  <th align="right">Thao tác</th>
+                  <th className={styles.thRight}>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,22 +137,22 @@ export default function AdminInvoices() {
                     <td className={styles.dateCell}>
                       {inv.issuedAt ? new Date(inv.issuedAt).toLocaleDateString("vi-VN") : "—"}
                     </td>
-                    <td>
+                    <td className={styles.tdAction}>
                       <div className={styles.actionGroup}>
-                        <button className={styles.btnAction} onClick={() => setDetailInvoice(inv)} title="Xem chi tiết">
-                          <MdVisibility />
+                        <button className={styles.viewBtn} onClick={() => setDetailInvoice(inv)} title="Xem chi tiết">
+                          <MdVisibility size={16} /> Xem
                         </button>
                         <button
-                          className={`${styles.btnAction} ${styles.btnPdfAction}`}
+                          className={styles.pdfBtn}
                           disabled={generatingId === inv.id}
                           onClick={() => handleGeneratePdf(inv.id)}
                           title="Tạo file PDF"
                         >
-                          {generatingId === inv.id ? <div className={styles.smallSpinner} /> : <MdPictureAsPdf />}
+                          {generatingId === inv.id ? <div className={styles.smallSpinner} /> : <MdPictureAsPdf size={16} />} Tạo PDF
                         </button>
                         {inv.filePath && (
-                          <a href={inv.filePath} target="_blank" rel="noopener noreferrer" className={`${styles.btnAction} ${styles.btnDownloadAction}`} title="Tải file PDF">
-                            <MdDownload />
+                          <a href={inv.filePath} target="_blank" rel="noopener noreferrer" className={styles.downloadBtn} title="Tải file PDF">
+                            <MdDownload size={16} /> Tải
                           </a>
                         )}
                       </div>
@@ -250,13 +250,17 @@ export default function AdminInvoices() {
             </div>
             
             <div className={styles.modalFooter}>
-              <button className={styles.btnSecondary} onClick={() => setDetailInvoice(null)}>Đóng</button>
+              <button className={styles.btnSecondary} onClick={() => setDetailInvoice(null)}>
+                <MdClose size={16} /> Đóng
+              </button>
               <button 
                 className={styles.btnPrimary}
-                 disabled={generatingId === detailInvoice.id}
-                 onClick={() => handleGeneratePdf(detailInvoice.id)}
+                disabled={generatingId === detailInvoice.id}
+                onClick={() => handleGeneratePdf(detailInvoice.id)}
               >
-                  {generatingId === detailInvoice.id ? "Đang tạo PDF..." : "Tạo mới file PDF"}
+                {generatingId === detailInvoice.id
+                  ? <><div className={styles.smallSpinner} style={{display:'inline-block',marginRight:6}} /> Đang tạo PDF...</>
+                  : <><MdPictureAsPdf size={16} /> Tạo mới file PDF</>}
               </button>
             </div>
           </div>

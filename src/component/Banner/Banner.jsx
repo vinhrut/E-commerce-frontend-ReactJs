@@ -5,9 +5,8 @@ function Banner() {
   return (
     <div className={container}>
       <div className={content}>
-        <h1 className={title}>VISCA BARCELONA</h1>
-        <div>FC Barcelona – Más que un club </div>
-        <button className={banner_button}>Shop Now</button>
+        <h1 className={title}>Vinh Rut Shop</h1>
+        <div>Chất lượng là trên hết</div>
       </div>
     </div>
   );

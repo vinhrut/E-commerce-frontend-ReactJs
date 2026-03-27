@@ -6,7 +6,7 @@ import {
   deleteProduct,
 } from "../../../../src/apis/adminService";
 import styles from "./AdminProducts.module.css";
-import { MdAdd, MdSearch, MdEdit, MdDelete, MdClose, MdInventory, MdWarning } from "react-icons/md";
+import { MdAdd, MdSearch, MdEdit, MdDelete, MdClose, MdInventory, MdWarning, MdSave, MdCheckCircle } from "react-icons/md";
 
 const EMPTY_FORM = {
   name: "", price: "", description: "", type: "", material: "",
@@ -25,9 +25,16 @@ export default function AdminProducts() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const fileInputRef = useRef(null);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFiles(files);
+    setImagePreviews(files.map(f => URL.createObjectURL(f)));
+  };
 
   const loadProducts = (p = 0) => {
     setLoading(true);
@@ -54,6 +61,7 @@ export default function AdminProducts() {
     setEditingId(null);
     setForm(EMPTY_FORM);
     setImageFiles([]);
+    setImagePreviews([]);
     setShowModal(true);
   };
 
@@ -68,6 +76,7 @@ export default function AdminProducts() {
       sizes: product.sizes?.length ? product.sizes.map(s => ({ sizeName: s.sizeName, quantity: s.quantity })) : [{ sizeName: "", quantity: "" }],
     });
     setImageFiles([]);
+    setImagePreviews(product.images || []);
     setShowModal(true);
   };
 
@@ -143,7 +152,9 @@ export default function AdminProducts() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <button className={styles.btnSecondary} type="submit">Tìm</button>
+          <button className={styles.btnSecondary} type="submit">
+            <MdSearch size={16} /> Tìm
+          </button>
         </form>
       </div>
 
@@ -168,7 +179,7 @@ export default function AdminProducts() {
                   <th>Loại</th>
                   <th>Giá</th>
                   <th>Tồn kho (Theo size)</th>
-                  <th align="right">Thao tác</th>
+                  <th className={styles.thRight}>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -199,13 +210,13 @@ export default function AdminProducts() {
                         )) || "—"}
                       </div>
                     </td>
-                    <td>
+                    <td className={styles.tdAction}>
                       <div className={styles.actionGroup}>
-                        <button className={styles.btnAction} onClick={() => openEdit(p)} title="Sửa">
-                          <MdEdit />
+                        <button className={styles.editBtn} onClick={() => openEdit(p)} title="Sửa">
+                          <MdEdit size={16} /> Sửa
                         </button>
-                        <button className={`${styles.btnAction} ${styles.btnDanger}`} onClick={() => setConfirmDelete(p)} title="Xóa">
-                          <MdDelete />
+                        <button className={styles.deleteBtn} onClick={() => setConfirmDelete(p)} title="Xóa">
+                          <MdDelete size={16} /> Xóa
                         </button>
                       </div>
                     </td>
@@ -301,20 +312,35 @@ export default function AdminProducts() {
                 <div className={styles.imageSection}>
                   <div className={styles.sectionHeader}>
                     <h3>Ảnh sản phẩm</h3>
-                    {imageFiles.length > 0 && <span className={styles.fileCount}>{imageFiles.length} file được chọn</span>}
+                    {imageFiles.length > 0 && <span className={styles.fileCount}>{imageFiles.length} file mới</span>}
                   </div>
+                  
+                  {imagePreviews.length > 0 && (
+                    <div className={styles.previewGrid}>
+                      {imagePreviews.map((src, idx) => (
+                        <img key={idx} src={src} alt="Preview" className={styles.previewImg} />
+                      ))}
+                    </div>
+                  )}
+
                   <div className={styles.uploadArea} onClick={() => fileInputRef.current?.click()}>
                     <MdAdd size={32} color="#94a3b8" />
-                    <p>Nhấn để tải ảnh lên</p>
-                    <input ref={fileInputRef} type="file" multiple accept="image/*" className={styles.hiddenFile} onChange={e => setImageFiles(Array.from(e.target.files))} />
+                    <p>{imagePreviews.length > 0 ? "Chọn ảnh khác để thay thế" : "Nhấn để tải ảnh lên"}</p>
+                    <input ref={fileInputRef} type="file" multiple accept="image/*" className={styles.hiddenFile} onChange={handleImageChange} />
                   </div>
                 </div>
               </div>
 
               <div className={styles.modalFooter}>
-                <button type="button" className={styles.btnSecondary} onClick={() => setShowModal(false)}>Hủy bỏ</button>
+                <button type="button" className={styles.btnSecondary} onClick={() => setShowModal(false)}>
+                  <MdClose size={16} /> Hủy bỏ
+                </button>
                 <button type="submit" className={styles.btnPrimary} disabled={saving}>
-                  {saving ? "Đang lưu..." : editingId ? "Lưu cập nhật" : "Tạo sản phẩm"}
+                  {saving
+                    ? <><MdSave size={16} /> Đang lưu...</>
+                    : editingId
+                      ? <><MdSave size={16} /> Lưu cập nhật</>
+                      : <><MdCheckCircle size={16} /> Tạo sản phẩm</>}
                 </button>
               </div>
             </form>
@@ -332,8 +358,12 @@ export default function AdminProducts() {
             <h3>Xóa sản phẩm</h3>
             <p>Bạn có chắc muốn xóa sản phẩm <strong>"{confirmDelete.name}"</strong>? Hành động này không thể hoàn tác.</p>
             <div className={styles.confirmActions}>
-              <button className={styles.btnSecondary} onClick={() => setConfirmDelete(null)}>Hủy</button>
-              <button className={`${styles.btnPrimary} ${styles.btnDangerBg}`} onClick={() => handleDelete(confirmDelete.id)}>Xóa Sản Phẩm</button>
+              <button className={styles.btnSecondary} onClick={() => setConfirmDelete(null)}>
+                <MdClose size={16} /> Hủy
+              </button>
+              <button className={`${styles.btnPrimary} ${styles.btnDangerBg}`} onClick={() => handleDelete(confirmDelete.id)}>
+                <MdDelete size={16} /> Xóa Sản Phẩm
+              </button>
             </div>
           </div>
         </div>
